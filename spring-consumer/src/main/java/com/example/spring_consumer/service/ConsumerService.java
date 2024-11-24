@@ -5,6 +5,6 @@ import com.example.spring_consumer.dto.Message;
 
 public interface ConsumerService {
 
-    public void action(Message message);
+    public void action(Message message) throws Exception;
 
 }

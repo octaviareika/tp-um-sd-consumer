@@ -10,7 +10,8 @@ import com.example.spring_consumer.service.ConsumerService;
 public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
-    public void action(Message message) {
+    public void action(Message message) throws Exception{
+        //throw new Exception("Error");
         System.out.println("Message received: " + message.getText());
     }
     

@@ -1,5 +1,6 @@
 package com.example.spring_consumer.amqp.implementation;
 
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,9 +18,16 @@ public class RabbitConsumer implements AmqpConsumer<Message> {
     @Override
     @RabbitListener(queues = "${spring.rabbitmq.request.routing-key.producer}")
     public void consumer(Message message) {
-        System.out.println("Consuming message: " + message.getText());
 
-        consumerService.action(message);
+        try {
+            System.out.println("Consuming message: " + message.getText());
+
+            consumerService.action(message);
+
+        } catch (Exception e) {
+            throw new AmqpRejectAndDontRequeueException(e);
+        }
+        
     }
     
 }
